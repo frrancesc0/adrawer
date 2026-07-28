@@ -1,0 +1,80 @@
+.bg-index{
+    background: url(../assets/images/bg-pattern-01.png);
+    background-size: cover;
+    background-repeat: none;
+    background-position: center center;
+    background-attachment: fixed;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0; /* Lo mantiene justo por encima del gradiente de fondo, pero detrás del contenido */
+    pointer-events: none; /* Crucial: evita que el SVG bloquee los clics en los botones */
+    display: flex;
+    opacity: 0.2;
+}
+
+/* ==========================================
+   FONDO A PANTALLA COMPLETA (SVG)
+   ========================================== */
+.logo-container {
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Lo mantiene justo por encima del gradiente de fondo, pero detrás del contenido */
+    pointer-events: none; /* Crucial: evita que el SVG bloquee los clics en los botones */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.agrid-logo {
+    width: 100%;
+    height: 100%;
+
+}
+
+/* ==========================================
+   ESTILOS ESPECÍFICOS DEL INDEX
+   ========================================== */
+
+/* Layout general sobre el fondo SVG */
+.index-layout {
+    position: relative; /* Asegura que este contenedor flote sobre el logo-container */
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: calc(100vh - 2.5rem); 
+    width: 100%;
+}
+
+/* Encabezado (ahora solo alinea la brújula) */
+.index-header {
+    display: flex;
+    justify-content: flex-end; /* Alinea la brújula a la derecha */
+    align-items: flex-start;
+    width: 100%;
+    padding: 2rem; /* Separación de los bordes */
+}
+
+/* Contenedor del panel inferior de herramientas */
+.index-menu-container {
+    border-radius: .6rem;
+    border: 1.2px solid rgba(255, 255, 255, 0.2);
+    background-color: rgb(0, 0, 0, .3);
+    backdrop-filter: blur(.4rem); 
+    padding: 3rem 0;
+    position: fixed;
+    bottom: 0;
+    left: 0rem;
+    width: calc(100% - 2rem);
+    margin: 0 1rem 1rem 1rem;
+    z-index: 100;
+    align-items: center;
+}
+
+.index-grid {
+    max-width: 1200px;
+}

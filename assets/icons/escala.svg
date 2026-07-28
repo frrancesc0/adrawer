@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 256 256">
+  <!-- Generator: Adobe Illustrator 29.5.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 137)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #fff;
+      }
+
+      .st1 {
+        display: none;
+      }
+
+      .st2 {
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 19px;
+      }
+
+      .st2, .st3 {
+        fill: none;
+        stroke: #fff;
+      }
+
+      .st3 {
+        stroke-miterlimit: 10;
+        stroke-width: 30px;
+      }
+    </style>
+  </defs>
+  <g id="Capa_2" class="st1">
+    <rect width="256" height="256"/>
+  </g>
+  <g id="Capa_1">
+    <rect class="st3" x="48.03" y="15.4" width="192.48" height="192.48" rx="36.62" ry="36.62"/>
+    <rect class="st0" y="135.87" width="120.13" height="120.13" rx="36.62" ry="36.62"/>
+    <line class="st2" x1="128" y1="128" x2="194" y2="62"/>
+    <polyline class="st2" points="155.22 62 194 62 194 100.73"/>
+  </g>
+</svg>

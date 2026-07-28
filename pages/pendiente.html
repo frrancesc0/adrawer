@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agrid - pendiente</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/tool.css">
+</head>
+<body class="menu-open">
+
+  <header class="tool-header">
+    <a href="../index.html" class="brand-link">agrid<span class="brand-highlight">pendiente</span></a>
+  </header>
+
+  <main class="tool-container page-content" id="main-content">
+    <div class="calculator-box entry-animator">
+      
+      <div class="calc-group">
+        <label class="calc-label">longitud</label>
+        <div class="input-row">
+          <div class="unit-pill">
+            <select id="length-unit" class="unit-select">
+              <option value="m" selected>m</option>
+              <option value="cm">cm</option>
+              <option value="mm">mm</option>
+              <option value="km">km</option>
+              <option value="in">in</option>
+              <option value="ft">ft</option>
+            </select>
+          </div>
+          <input type="number" id="length-val" class="input-card input-large" placeholder="1" value="1" step="any">
+        </div>
+      </div>
+
+      <div class="calc-group">
+        <label class="calc-label">altura</label>
+        <div class="input-row">
+          <div class="unit-pill">
+            <select id="height-unit" class="unit-select">
+              <option value="m" selected>m</option>
+              <option value="cm">cm</option>
+              <option value="mm">mm</option>
+              <option value="km">km</option>
+              <option value="in">in</option>
+              <option value="ft">ft</option>
+            </select>
+          </div>
+          <input type="number" id="height-val" class="input-card input-large" placeholder="0.08" value="0.08" step="any">
+        </div>
+      </div>
+
+      <div class="calc-group">
+        <label class="calc-label">pendiente (%)</label>
+        <div class="input-row">
+          <input type="number" id="slope-val" class="input-card input-large" placeholder="8" value="8" step="any">
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div class="bottom-menu-wrapper open" id="bottom-menu">
+    <button class="drawer-toggle" id="drawer-toggle" aria-label="Abrir menú">
+      <img src="../assets/icons/arrow-menu.svg" alt="Menú" class="arrow-menu-icon">
+    </button>
+
+    <nav class="tools-drawer">
+      <div class="tools-grid">
+        <a href="und-digitales.html" class="tool-card">
+          <img src="../assets/icons/und-digitales.svg" alt="und. digitales" class="tool-icon">
+          <span>und. digitales</span>
+        </a>
+        <a href="escala.html" class="tool-card">
+          <img src="../assets/icons/escala.svg" alt="escala" class="tool-icon">
+          <span>escala</span>
+        </a>
+        <a href="area.html" class="tool-card">
+          <img src="../assets/icons/area.svg" alt="área" class="tool-icon">
+          <span>área</span>
+        </a>
+        <a href="longitud.html" class="tool-card">
+          <img src="../assets/icons/longitud.svg" alt="longitud" class="tool-icon">
+          <span>longitud</span>
+        </a>
+        <a href="pendiente.html" class="tool-card active">
+          <img src="../assets/icons/pendiente.svg" alt="pendiente" class="tool-icon">
+          <span>pendiente</span>
+        </a>
+        <a href="luminaria.html" class="tool-card">
+          <img src="../assets/icons/luminaria.svg" alt="luminaria" class="tool-icon">
+          <span>luminaria</span>
+        </a>
+        <a href="papel.html" class="tool-card">
+          <img src="../assets/icons/papel.svg" alt="papel" class="tool-icon">
+          <span>papel</span>
+        </a>
+        <a href="imposicion.html" class="tool-card">
+          <img src="../assets/icons/imposicion.svg" alt="imposición" class="tool-icon">
+          <span>imposición</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <script src="../js/pendiente.js"></script>
+  <script src="../js/tool.js"></script>
+</body>
+</html>
