@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generador de Pliegos - agrid</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/tool.css">
   
   <script src="../js/pdf.min.js"></script>
@@ -22,12 +26,12 @@
       <aside class="calculator-box imposicion-controls">
         
         <div class="calc-group">
-          <label class="calc-label" for="pdfInput">1. Seleccionar archivo PDF</label>
+          <label class="calc-label" for="pdfInput">Seleccionar archivo PDF</label>
           <input type="file" id="pdfInput" class="file-input-agrid" accept="application/pdf">
         </div>
 
         <div class="calc-group">
-          <label class="calc-label" for="outputSize">2. Tamaño de hoja de salida</label>
+          <label class="calc-label" for="outputSize">Tamaño de hoja de salida</label>
           <div class="unit-pill unit-large">
             <select id="outputSize" class="unit-select">
               <option value="A4">A4 Horizontal (297 x 210 mm)</option>
@@ -50,7 +54,7 @@
         </div>
 
         <div class="calc-group">
-          <label class="calc-label" for="bookletType">3. Tipo de encuadernación</label>
+          <label class="calc-label" for="bookletType">Tipo de encuadernación</label>
           <div class="unit-pill unit-large">
             <select id="bookletType" class="unit-select">
               <option value="saddle">Grapado al centro</option>
