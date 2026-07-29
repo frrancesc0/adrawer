@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // Nivel General (Hogar, pasillos)
           lampLumensInput.value = "1200";
           smartLabel.textContent = "💡 Nivel General: Ideal para ampolletas estándar (800-1200 lm)";
-          smartLabel.style.color = "#76ff89"; // Color verde agrid
+          smartLabel.style.color = "#76ff89"; // Color verde adrawer
         }
       }
       
