@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Pliegos - agrid</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/tool.css">
+  
+  <script src="../js/pdf.min.js"></script>
+  <script src="../js/pdf-lib.min.js"></script>
+</head>
+<body class="menu-open">
+
+  <header class="tool-header">
+    <a href="../index.html" class="brand-link">agrid<span class="brand-highlight">imposición</span></a>
+  </header>
+
+  <main class="tool-container page-content" id="main-content">
+    
+    <div class="imposicion-layout entry-animator">
+      
+      <aside class="calculator-box imposicion-controls">
+        
+        <div class="calc-group">
+          <label class="calc-label" for="pdfInput">Seleccionar archivo PDF</label>
+          <input type="file" id="pdfInput" class="file-input-agrid" accept="application/pdf">
+        </div>
+
+        <div class="calc-group">
+          <label class="calc-label" for="outputSize">Tamaño de hoja de salida</label>
+          <div class="unit-pill unit-large">
+            <select id="outputSize" class="unit-select">
+              <option value="A4">A4 Horizontal (297 x 210 mm)</option>
+              <option value="LETTER">Carta Horizontal (11 x 8.5 in)</option>
+              <option value="A3">A3 Horizontal (420 x 297 mm)</option>
+              <option value="TABLOID">Tabloide Horizontal (17 x 11 in)</option>
+              <option value="CUSTOM">A medida (Personalizado)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="calc-group" id="customDimensionsGroup" style="display: none;">
+          <label class="calc-label">Dimensiones de la hoja (Ancho x Alto)</label>
+          <div class="input-row">
+            <input type="number" id="customWidth" class="input-card input-small" placeholder="297" value="297" min="50" max="2000" step="1">
+            <span class="colon-separator">x</span>
+            <input type="number" id="customHeight" class="input-card input-small" placeholder="210" value="210" min="50" max="2000" step="1">
+            <span class="colon-separator">mm</span>
+          </div>
+        </div>
+
+        <div class="calc-group">
+          <label class="calc-label" for="bookletType">Tipo de encuadernación</label>
+          <div class="unit-pill unit-large">
+            <select id="bookletType" class="unit-select">
+              <option value="saddle">Grapado al centro</option>
+              <option value="perfect">Fresado / Costura por Firmas</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="calc-group" id="sigGroup" style="display: none;">
+          <label class="calc-label" for="sigSize">Páginas por Firma</label>
+          <div class="unit-pill unit-large">
+            <select id="sigSize" class="unit-select">
+              <option value="4">4 páginas (1 pliego)</option>
+              <option value="8">8 páginas (2 pliegos)</option>
+              <option value="12">12 páginas (3 pliegos)</option>
+              <option value="16" selected>16 páginas (4 pliegos)</option>
+              <option value="24">24 páginas (6 pliegos)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="calc-group download-group">
+          <button id="downloadBtn" class="btn-agrid" disabled>Descargar Pliegos</button>
+          <span id="pageInfo" class="status-log">Esperando archivo PDF...</span>
+          <span id="statusLog" class="status-log"></span>
+        </div>
+        
+      </aside>
+
+      <section id="previewArea" class="preview-area">
+        <div class="preview-value">
+          <span>Aquí aparecerá la vista previa de tus pliegos al cargar un PDF.</span>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="bottom-menu-wrapper open" id="bottom-menu">
+    <button class="drawer-toggle" id="drawer-toggle" aria-label="Abrir menú">
+      <img src="../assets/icons/arrow-menu.svg" alt="Menú" class="arrow-menu-icon">
+    </button>
+
+    <nav class="tools-drawer">
+      <div class="tools-grid">
+        <a href="und-digitales.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/und-digitales.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/und-digitales-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>und. digitales</span>
+        </a>
+        <a href="escala.html" class="tool-card">
+          <div class="tool-icon">
+            <img src="../assets//icons/escala.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/escala-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>escala</span>
+        </a>
+        <a href="area.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/area.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/area-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>área</span>
+        </a>
+        <a href="longitud.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/longitud.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/longitud-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>longitud</span>
+        </a>
+        <a href="pendiente.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/pendiente.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/pendiente-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>pendiente</span>
+        </a>
+        <a href="luminaria.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/luminaria.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/luminaria-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>luminaria</span>
+        </a>
+        <a href="papel.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/papel.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/papel-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>papel</span>
+        </a>
+        <a href="imposicion.html" class="tool-card active">
+                    <div class="tool-icon">
+            <img src="../assets//icons/imposicion.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/imposicion-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>imposición</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <script src="../js/tool.js"></script>
+  <script src="../js/imposicion.js"></script>
+</body>
+</html>

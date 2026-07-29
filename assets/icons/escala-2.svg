@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 256 256">
+  <!-- Generator: Adobe Illustrator 29.5.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 137)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #fff;
+      }
+
+      .st1 {
+        display: none;
+      }
+    </style>
+  </defs>
+  <g id="Capa_2" class="st1">
+    <rect width="256" height="256"/>
+  </g>
+  <path class="st0" d="M3.08,139.42c0-11.87,9.62-21.5,21.5-21.5h92.01c11.87,0,21.5,9.62,21.5,21.5v92.01c0,11.87-9.62,21.5-21.5,21.5h96.42c22.01,0,39.92-17.91,39.92-39.92V43c0-22.01-17.91-39.92-39.92-39.92H43C20.99,3.08,3.08,20.99,3.08,43v96.42Z"/>
+  <path class="st0" d="M116.58,137.76c.91,0,1.65.74,1.65,1.65v92.01c0,.91-.74,1.65-1.65,1.65H35.77c-7.09,0-12.85-5.76-12.85-12.85v-80.81c0-.91.74-1.65,1.65-1.65h92.01"/>
+  <path class="st0" d="M-613.6,167.83"/>
+</svg>

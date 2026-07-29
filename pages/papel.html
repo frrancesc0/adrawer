@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agrid. - Formatos de Papel</title>
+  <link rel="stylesheet" href="../css/tool.css">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="menu-open">
+      
+      <header class="tool-header" style="align-items: baseline; gap: 0.5rem;">
+        <a href="../index.html" class="brand-link">agrid<span class="brand-highlight">papel</span></a>
+      </header>
+
+      <main class="tool-container page-content" id="main-content">
+        <div class="imposicion-layout entry-animator">
+          
+            <div class="calculator-box imposicion-controls">
+              
+              <div class="calc-group">
+                <label class="calc-label">Serie</label>
+                <div class="input-row">
+                  <div class="unit-pill unit-large">
+                    <select id="paper-serie" class="unit-select">
+                      <option value="A" selected>Serie A (ISO 216)</option>
+                      <option value="B">Serie B (ISO 216)</option>
+                      <option value="C">Serie C (Sobres ISO 269)</option>
+                      <option value="NORAM">Norteamericana</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="calc-group">
+                <label class="calc-label">Formato</label>
+                <div class="input-row">
+                  <div class="unit-pill unit-large">
+                    <select id="paper-format" class="unit-select">
+                      </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="calc-group">
+                <label class="calc-label">Orientación</label>
+                <div class="input-row">
+                  <div class="unit-pill unit-large">
+                    <select id="paper-orientation" class="unit-select">
+                      <option value="portrait" selected>Vertical</option>
+                      <option value="landscape">Horizontal</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+            <div class="calc-group">
+                <label class="calc-label" id="copy-status" style="transition: color 0.3s ease;">Dimensiones</label>
+                <div class="input-row" style="justify-content: flex-start; gap: 0.5rem;">
+                  
+                  <div class="unit-pill clickable-value" id="copy-width" title="Click para copiar ancho">
+                    <span id="display-width" style="color: #83ffff; font-size: var(--fs-title);">210</span>
+                  </div>
+                  
+                  <span style="color: #ffffff59; font-size: var(--fs-small);">x</span>
+                  
+                  <div class="unit-pill clickable-value" id="copy-height" title="Click para copiar alto">
+                    <span id="display-height" style="color: #83ffff; font-size:var(--fs-title);">297</span>
+                  </div>
+
+                  <div class="unit-pill" style="margin-left: 0.5rem;">
+                    <select id="paper-unit" class="unit-select" style="padding-right: 0;">
+                      <option value="mm" selected>mm</option>
+                      <option value="cm">cm</option>
+                      <option value="m">m</option>
+                      <option value="in">in</option>
+                    </select>
+                  </div>
+
+                </div>
+              </div>
+
+              
+            </div>
+            <div class="preview-area" style="align-items: center; justify-content: center; position: relative; text-align: center;">
+              
+              <div class="paper-stage">
+                <div id="paper-sheet" class="paper-sheet">
+                  <span id="label-width" class="dim-label label-top">210 mm</span>
+                  <span id="label-height" class="dim-label label-right">297 mm</span>
+                  <div id="sheet-name" class="sheet-watermark">A4</div>
+                </div>
+              </div>
+  
+            </div>
+        </div>
+      </main>
+
+<div class="bottom-menu-wrapper open" id="bottom-menu">
+    <button class="drawer-toggle" id="drawer-toggle" aria-label="Abrir menú">
+      <img src="../assets/icons/arrow-menu.svg" alt="Menú" class="arrow-menu-icon">
+    </button>
+
+    <nav class="tools-drawer">
+      <div class="tools-grid">
+        <a href="und-digitales.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/und-digitales.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/und-digitales-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>und. digitales</span>
+        </a>
+        <a href="escala.html" class="tool-card">
+          <div class="tool-icon">
+            <img src="../assets//icons/escala.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/escala-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>escala</span>
+        </a>
+        <a href="area.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/area.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/area-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>área</span>
+        </a>
+        <a href="longitud.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/longitud.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/longitud-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>longitud</span>
+        </a>
+        <a href="pendiente.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/pendiente.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/pendiente-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>pendiente</span>
+        </a>
+        <a href="luminaria.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/luminaria.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/luminaria-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>luminaria</span>
+        </a>
+        <a href="papel.html" class="tool-card active">
+                    <div class="tool-icon">
+            <img src="../assets//icons/papel.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/papel-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>papel</span>
+        </a>
+        <a href="imposicion.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/imposicion.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/imposicion-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>imposición</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <script src="../js/tool.js"></script>
+  <script src="../js/papel.js"></script>
+</body>
+</html>
