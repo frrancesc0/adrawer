@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>adrawer - Calculadora de Vigas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/tool.css">
+      <link rel="icon" type="image/png" href="assets/images/adrawer-iso-01.png">
+
+</head>
+<body class="menu-open">
+
+  <header class="tool-header">
+    <a href="../index.html" class="brand-link"><img src="../assets/images/adrawer-iso.svg" alt=""><span class="brand-highlight">vigas</span></a>
+  </header>
+
+  <main class="tool-container page-content" id="main-content">
+    <div class="imposicion-layout entry-animator">
+      
+      <div class="calculator-box imposicion-controls">
+          
+          <div class="calc-group">
+            <label class="calc-label">Esquema Estático</label>
+            <span class="calc-label" style="padding-left: 1rem;">Longitud (L)</span>
+            <div class="input-row">
+              <input type="number" id="beam-length" class="input-card input-small" value="5.0" step="0.1" min="0.1">
+              <span class="colon-separator">m</span>
+            </div>
+            <span class="calc-label" style="padding-left: 1rem;">Apoyos</span>
+            <div class="input-row">
+              <select id="beam-supports" class="unit-select">
+                <option value="simply-supported">Simplemente Apoyada</option>
+                <option value="cantilever-left">Voladizo (Empotrada Izq.)</option>
+                <option value="cantilever-right">Voladizo (Empotrada Der.)</option>
+                <option value="fixed-fixed">Doblemente Empotrada</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="calc-group" style="margin-top: 1rem;">
+            <label class="calc-label" style="width: 100%;">Material y Sección</label>
+            <span class="calc-label" style="padding-left: 1rem;">Material</span>
+            <div class="input-row">
+              <select id="beam-material" class="unit-select">
+                <option value="wood">Madera (NCh 1198)</option>
+                <option value="steel">Acero (Perfiles Comerciales)</option>
+                <option value="concrete">Hormigón Armado</option>
+              </select>
+            </div>
+
+            <span class="calc-label" style="padding-left: 1rem;">Calidad</span>
+            <div id="ui-grade" class="input-row">
+              <select id="mat-grade" class="unit-select"></select>
+            </div>
+            <div id="ui-dims" style="display:flex; flex-direction:column; gap:0.4rem; width:100%;">
+              <div class="input-row">
+                <span class="calc-label" style="padding-left: 1rem;">Base (b)</span>
+                <input type="number" id="dim-b" class="input-card input-small" value="10">
+                <span class="colon-separator">cm</span>
+              </div>
+              <div class="input-row">
+                <span class="calc-label" style="padding-left: 1rem;">Alto (h)</span>
+                <input type="number" id="dim-h" class="input-card input-small" value="20">
+                <span class="colon-separator">cm</span>
+              </div>
+            </div>
+
+            <div id="ui-steel-family" class="input-row" style="display:none;">
+              <span class="calc-label" style="padding-left: 1rem;">Tipo</span>
+              <select id="steel-family" class="input-card input-large"></select>
+            </div>
+            <div id="ui-steel-profile" class="input-row" style="display:none;">
+              <span class="calc-label" style="padding-left: 1rem;">Perfil</span>
+              <select id="steel-profile" class="input-card input-large"></select>
+            </div>
+          </div>
+
+          <div class="calc-group" style="margin-top: 1rem;">
+            <label class="calc-label" style="width: 100%;">Solicitaciones</label>
+            <div class="input-row" style="justify-content: flex-end; margin-bottom: 0.5rem; gap: 0.5rem;">
+              <span class="calc-label" style="padding-left: 1rem;" style="font-size: var(--fs-small); cursor: pointer;" onclick="document.getElementById('include-weight').click()">Incluir peso propio de viga</span>
+              <input type="checkbox" id="include-weight" checked style="accent-color: var(--adrawer-cyan); transform: scale(1.2);">
+            </div>
+            <div id="loads-container" class="loads-grid" style="display:flex; flex-direction:column; gap:0.5rem; width:100%;"></div>
+            <button id="btn-add-load" class="btn-adrawer" style="margin-top: 0.5rem;">+ Agregar Carga</button>
+          </div>
+
+          <div class="calc-group" style="margin-top: 1rem;">
+            <label class="calc-label" style="width: 100%;">4. Criterio de Flecha</label>
+            <div class="input-row">
+              <span class="calc-label" style="padding-left: 1rem;">Límite normativo</span>
+              <select id="deflection-limit" class="input-card input-large">
+                <option value="200">L / 200</option>
+                <option value="300" selected>L / 300</option>
+                <option value="400">L / 400</option>
+                <option value="500">L / 500</option>
+              </select>
+            </div>
+          </div>
+
+      </div>
+
+      <div class="preview-area" style="  flex: 1.5; padding: 1.5rem; box-sizing: border-box; flex-direction: column; display: flex; align-items: center; gap: 1.5rem; overflow: hidden; background-color: transparent; border: none; max-height: fit-content;">
+      <div class="preview-area" style="width: 100%; justify-content: center;">
+        <label class="calc-label">Esquema Gráfico</label>
+        <canvas id="beam-canvas" width="600" height="250" style="width: 100%; max-width: 100%; height: auto;"></canvas>
+      
+      </div>
+      
+      <div class="preview-area" style="max-height: 500px; width: 100%; max-width: 100%;">
+        
+        <label class="calc-label" style="margin-top: 2rem;">Resultados (Sistema Técnico)</label>
+        <div class="input-row" style="justify-content: space-between;">
+          <span class="calc-label" style="padding-left: 1rem;">Momento Flector (M max)</span>
+          <span class="input-card" id="res-moment" readonly>0.00 kgf·m</span>
+        </div>
+        <div class="input-row" style="justify-content: space-between; margin-top: 0.5rem;">
+          <span class="calc-label" style="padding-left: 1rem;">Esfuerzo de Corte (V max)</span>
+          <span class="input-card" id="res-shear" readonly>0.00 kgf</span>
+        </div>
+
+        <hr style="border-color: rgba(255,255,255,0.05); width: 100%; margin: 1rem 0;">
+
+        <div class="input-row" style="justify-content: space-between;">
+          <span class="calc-label" style="padding-left: 1rem;">Esfuerzo de Trabajo (σ)</span>
+          <span class="input-card" id="res-tension" readonly>0.00 kgf/cm²</span>
+        </div>
+        <div class="input-row" style="justify-content: space-between; margin-top: 0.5rem;">
+          <span class="calc-label" style="padding-left: 1rem;">Esfuerzo Admisible</span>
+          <span class="input-card" id="res-adm-tension" style="color: var(--text-gray);" readonly>0.00 kgf/cm²</span>
+        </div>
+        <div class="status-log" id="status-resistencia" style="margin-top: 0.8rem; font-size: 1.1rem;"></div>
+
+        <hr style="border-color: rgba(255,255,255,0.05); width: 100%; margin: 1rem 0;">
+
+        <div class="input-row" style="justify-content: space-between;">
+          <span class="calc-label" style="padding-left: 1rem;">Deformación Real (Flecha)</span>
+          <span class="input-card" id="res-flecha" readonly>0.00 mm</span>
+        </div>
+        <div class="input-row" style="justify-content: space-between; margin-top: 0.5rem;">
+          <span class="calc-label" style="padding-left: 1rem;">Deformación Límite</span>
+          <span class="input-card" id="res-adm-flecha" style="color: var(--text-gray);" readonly>0.00 mm</span>
+        </div>
+        <div class="status-log" id="status-flecha" style="margin-top: 0.8rem; font-size: 1.1rem;"></div>
+
+      </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="bottom-menu-wrapper open" id="bottom-menu">
+    <button class="drawer-toggle" id="drawer-toggle" aria-label="Abrir menú">
+      <img src="../assets/icons/arrow-menu.svg" alt="Menú" class="arrow-menu-icon">
+    </button>
+
+    <nav class="tools-drawer">
+      <div class="tools-grid">
+        <a href="und-digitales.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/und-digitales.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/und-digitales-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>und. digitales</span>
+        </a>
+        <a href="escala.html" class="tool-card">
+          <div class="tool-icon">
+            <img src="../assets//icons/escala.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/escala-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>escala</span>
+        </a>
+        <a href="area.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/area.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/area-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>área</span>
+        </a>
+        <a href="longitud.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/longitud.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/longitud-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>longitud</span>
+        </a>
+        <a href="pendiente.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/pendiente.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/pendiente-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>pendiente</span>
+        </a>
+        <a href="luminaria.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/luminaria.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/luminaria-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>luminaria</span>
+        </a>
+        <a href="papel.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/papel.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/papel-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>papel</span>
+        </a>
+        <a href="imposicion.html" class="tool-card">
+                    <div class="tool-icon">
+            <img src="../assets//icons/imposicion.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/imposicion-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>imposición</span>
+        </a>
+
+                <a href="vigas.html" class="tool-card active">
+                    <div class="tool-icon">
+            <img src="../assets//icons/vigas.svg" class="icon-default" alt="Escala">
+            <img src="../assets/icons/vigas-2.svg" class="icon-active" alt="Escala Activa">
+          </div>
+          <span>vigas</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <script src="../js/tool.js"></script>
+  <script src="../js/vigas.js"></script>
+</body>
+</html>

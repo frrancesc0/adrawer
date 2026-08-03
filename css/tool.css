@@ -87,6 +87,16 @@ section::-webkit-scrollbar-thumb{
   border-radius: 5px;
 }
 
+div::-webkit-scrollbar{
+  background-color: transparent;
+  width: 4px;
+}
+
+div::-webkit-scrollbar-thumb{
+  background-color: var(--adrawer-magenta);
+  border-radius: 5px;
+}
+
 /* ==========================================
    ANIMACIÓN DE ENTRADA PARA LAS PÁGINAS
    ========================================== */
@@ -133,6 +143,7 @@ body.menu-open .page-content {
   font-size: var(--fs-title);
   text-decoration: none;
   letter-spacing: 0.5px;
+  position: fixed;
 }
 
 .brand-link img{
@@ -188,12 +199,14 @@ margin: 0 .4rem 0 0;
   width: 100%;
 }
 
+.input-row > .calc-label{
+  position: relative;
+  width: 100%;
+}
+
 .input-card {
   background-color: transparent;
   border: none;
-  /* box-shadow: inset 0px -1px 0px 0px #ffffff59; */
-  /* border: 1px solid var(--adrawer-cyan); */
-  /* border-radius: 6px; */
   color: var(--text-primary);
   font-family: var(--font-main);
   font-size: var(--fs-input);
@@ -209,7 +222,6 @@ margin: 0 .4rem 0 0;
 }
 
 .input-card:focus {
-  /* box-shadow: inset 0px -1px 0px 0px var(--adrawer-cyan); */
   color: var(--adrawer-cyan);
 }
 
@@ -228,8 +240,6 @@ margin: 0 .4rem 0 0;
 }
 
 .unit-pill {
-  /* background-color: var(--bg-panel);
-  border: 1px solid var(--adrawer-cyan); */
   border-radius: 20px;
   padding: 0.5rem 0.8rem;
   display: flex;
@@ -464,6 +474,7 @@ margin: 0 .4rem 0 0;
   gap: 1.5rem;
   overflow-y: auto; 
   max-height: 65vh; 
+  overflow-x: hidden;
 }
 
 /* Título de las Firmas */
@@ -472,7 +483,6 @@ margin: 0 .4rem 0 0;
   margin-bottom: 1rem;
   font-weight: 300;
   font-size: var(--fs-input);
-  border-bottom: 1px solid rgba(118, 255, 137, 0.2);
   padding-bottom: 0.5rem;
 }
 
@@ -691,4 +701,95 @@ margin: 0 .4rem 0 0;
 .clickable-value:active {
   transform: scale(0.92);
   background-color: rgba(131, 255, 255, 0.1); /* Efecto sutil usando el cian */
+}
+
+/* ==========================================
+   ESTILOS ESPECÍFICOS: CALCULADORA DE VIGAS
+   ========================================== */
+.loads-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+.load-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1.5fr auto;
+  gap: 0.5rem;
+  background-color: var(--bg-panel);
+  padding: 0.8rem;
+  border: 1px solid rgba(131, 255, 255, 0.15); /* Borde cian sutil */
+  border-radius: 8px;
+  align-items: center;
+}
+
+.load-row select, .load-row input {
+  font-size: var(--fs-small);
+  padding: 0.4rem;
+  text-align: center;
+}
+
+.btn-delete-load {
+  background: transparent;
+  border: none;
+  color: var(--adrawer-magenta);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-delete-load:hover {
+  transform: scale(1.1);
+}
+
+/* Layout dinámico de cargas */
+.load-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: var(--bg-panel);
+  padding: 0.8rem;
+  border: 1px solid rgba(131, 255, 255, 0.15);
+  border-radius: 8px;
+  position: relative;
+}
+
+.load-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.load-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+/* Campos extra para cargas distribuidas (ocultos por defecto) */
+.dist-only {
+  display: none;
+}
+
+/* Botón de eliminar más limpio */
+.btn-delete-load {
+  background: transparent;
+  border: 1px solid rgba(255, 87, 241, 0.3); /* magenta con transparencia */
+  color: var(--adrawer-magenta);
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-delete-load:hover {
+  background: var(--adrawer-magenta);
+  color: var(--text-dark);
 }
