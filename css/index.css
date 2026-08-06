@@ -15,7 +15,25 @@ body {
   /* Fondo de 2 capas: 
      1. Textura granulada con opacidad sutil
      2. Gradiente radial oscuro original */
-  background:radial-gradient(circle at top center, #5c7a5f , #335033, #132413, #0a010a);
+  background:radial-gradient(circle at top center, #709e74 , #30633b, #13241d, #0e0211);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* Permite hacer clic a través de la capa sin bloquear botones */
+
+/* Patrón de ruido de prueba (URL externa temporal) */
+  background-image: url("../assets/images/bg-pattern.png");
+  background-repeat: repeat;
+
+/* EL TRUCO PARA FONDOS OSCUROS: */
+  mix-blend-mode:difference; /* Ilumina el fondo oscuro */
+  opacity: 0.15; /* Opacidad alta para probar que funciona */  
 }
 
 

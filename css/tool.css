@@ -3,10 +3,10 @@
    ========================================== */
 :root {
   /* 1. Paleta de Colores (Fondos) */
-  --bg-gradient-1: #172517;
-  --bg-gradient-1-1: #050805;
-  --bg-gradient-2: #010203;
-  --bg-gradient-3: #1b0c1b;
+  --bg-gradient-1: #1e3f28;
+  --bg-gradient-1-1: #0a1814;
+  --bg-gradient-2: #05090e;
+  --bg-gradient-3: #0c040e;
   --bg-scrollbar-1: #101010;
   --bg-scrollbar-2: #171717;
   --bg-panel: #1b1c1c;
@@ -64,7 +64,8 @@ body::before {
   background-repeat: repeat;
 
 /* EL TRUCO PARA FONDOS OSCUROS: */
-  opacity: .15; /* Opacidad alta para probar que funciona */
+  mix-blend-mode: screen; /* Ilumina el fondo oscuro */
+  opacity: 0.15; /* Opacidad alta para probar que funciona */  
 }
 
 body::-webkit-scrollbar{
@@ -144,6 +145,8 @@ body.menu-open .page-content {
   text-decoration: none;
   letter-spacing: 0.5px;
   position: fixed;
+  display: flex;
+  align-items: center;
 }
 
 .brand-link img{

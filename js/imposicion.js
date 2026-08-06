@@ -24,6 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const bookletType = document.getElementById('bookletType');
   const sigSize = document.getElementById('sigSize');
   const sigGroup = document.getElementById('sigGroup');
+  
+  // NUEVOS ELEMENTOS: Modo de Impresión Simplex/Duplex
+  const printMode = document.getElementById('printMode');
+  const simplexOptions = document.getElementById('simplexOptions');
+  const reverseBackPages = document.getElementById('reverseBackPages');
+
   const downloadBtn = document.getElementById('downloadBtn');
   const statusLog = document.getElementById('statusLog');
   const previewArea = document.getElementById('previewArea');
@@ -68,6 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   sigSize.addEventListener('change', actualizarVista);
+
+  // NUEVO: Mostrar / ocultar opciones simplex
+  printMode.addEventListener('change', () => {
+    simplexOptions.style.display = printMode.value === 'simplex' ? 'block' : 'none';
+  });
 
   // ASIGNACIÓN DEL BOTÓN A LA FUNCIÓN DE COMBINACIÓN REAL
   downloadBtn.onclick = generarPDFPliegosCombinados;
@@ -213,23 +224,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- GENERACIÓN DEL PDF FINAL ---
+  // --- GENERACIÓN DEL PDF FINAL (CON SOPORTE SIMPLEX/DUPLEX) ---
   async function generarPDFPliegosCombinados() {
     if (!pdfBytesOriginal) return;
 
-    statusLog.textContent = "Generando pliegos combinados...";
+    statusLog.textContent = "Generando pliegos...";
     downloadBtn.disabled = true;
 
     try {
       const libPDF = window.PDFLib;
-
       const srcDoc = await libPDF.PDFDocument.load(pdfBytesOriginal);
       const totalPags = srcDoc.getPageCount();
 
-      const nuevoDoc = await libPDF.PDFDocument.create();
       const indices = Array.from({ length: totalPags }, (_, i) => i);
-      const paginasEmbebidas = await nuevoDoc.embedPdf(srcDoc, indices);
-
+      
       const [rawW, rawH] = obtenerDimensionesHoja();
       const sheetWidth = Math.max(rawW, rawH);  
       const sheetHeight = Math.min(rawW, rawH); 
@@ -238,32 +246,83 @@ document.addEventListener('DOMContentLoaded', () => {
       const tipo = bookletType.value;
       const tamFirma = parseInt(sigSize.value);
       const estructura = calcularEstructura(totalPags, tipo, tamFirma);
+      const sizeName = outputSize.value === 'CUSTOM' ? `${customWidthInput.value}x${customHeightInput.value}mm` : outputSize.value;
+      
+      const isSimplex = printMode.value === 'simplex';
+      const invertirReversos = reverseBackPages.checked;
 
-      for (let firma of estructura) {
-        for (let pliego of firma) {
-          montarHojaCombinada(nuevoDoc, paginasEmbebidas, pliego.frente, sheetWidth, sheetHeight, halfWidth, libPDF);
-          montarHojaCombinada(nuevoDoc, paginasEmbebidas, pliego.reverso, sheetWidth, sheetHeight, halfWidth, libPDF);
+      if (!isSimplex) {
+        // --- MODO DÚPLEX (1 Solo archivo intercalado) ---
+        const nuevoDoc = await libPDF.PDFDocument.create();
+        const paginasEmbebidas = await nuevoDoc.embedPdf(srcDoc, indices);
+
+        for (let firma of estructura) {
+          for (let pliego of firma) {
+            montarHojaCombinada(nuevoDoc, paginasEmbebidas, pliego.frente, sheetWidth, sheetHeight, halfWidth, libPDF);
+            montarHojaCombinada(nuevoDoc, paginasEmbebidas, pliego.reverso, sheetWidth, sheetHeight, halfWidth, libPDF);
+          }
         }
+
+        const bytesFinales = await nuevoDoc.save();
+        descargarArchivo(bytesFinales, `PLIEGOS_COMBINADOS_${sizeName}_${pdfInput.files[0].name}`);
+
+      } else {
+        // --- MODO SIMPLEX (2 Archivos separados) ---
+        const docFrontal = await libPDF.PDFDocument.create();
+        const docReverso = await libPDF.PDFDocument.create();
+        
+        const embFrontales = await docFrontal.embedPdf(srcDoc, indices);
+        const embReversos = await docReverso.embedPdf(srcDoc, indices);
+
+        let reversosTemp = [];
+
+        // Montar caras frontales y recolectar las caras reversas en orden
+        for (let firma of estructura) {
+          for (let pliego of firma) {
+            montarHojaCombinada(docFrontal, embFrontales, pliego.frente, sheetWidth, sheetHeight, halfWidth, libPDF);
+            reversosTemp.push(pliego.reverso);
+          }
+        }
+
+        // Invertir orden de los reversos si el usuario lo marcó
+        if (invertirReversos) {
+          reversosTemp.reverse();
+        }
+
+        // Montar las caras reversas
+        for (let rev of reversosTemp) {
+          montarHojaCombinada(docReverso, embReversos, rev, sheetWidth, sheetHeight, halfWidth, libPDF);
+        }
+
+        const bytesFrontal = await docFrontal.save();
+        const bytesReverso = await docReverso.save();
+
+        // Descargar primer archivo (Frentes)
+        descargarArchivo(bytesFrontal, `01_FRONTAL_${sizeName}_${pdfInput.files[0].name}`);
+
+        // Pausa de 600ms para asegurar que el navegador permite la descarga del segundo archivo simultáneo
+        setTimeout(() => {
+          descargarArchivo(bytesReverso, `02_REVERSO_${sizeName}_${pdfInput.files[0].name}`);
+        }, 600);
       }
 
-      const bytesFinales = await nuevoDoc.save();
-      const blob = new Blob([bytesFinales], { type: 'application/pdf' });
-      const sizeName = outputSize.value === 'CUSTOM' ? `${customWidthInput.value}x${customHeightInput.value}mm` : outputSize.value;
-
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `PLIEGOS_COMBINADOS_${sizeName}_${pdfInput.files[0].name}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      statusLog.textContent = "¡PDF con pliegos descargado con éxito!";
+      statusLog.textContent = isSimplex ? "¡Archivos simplex descargados con éxito!" : "¡PDF con pliegos descargado con éxito!";
     } catch (err) {
       console.error("Error al generar los pliegos:", err);
       statusLog.textContent = "Ocurrió un error al procesar el PDF.";
     } finally {
       downloadBtn.disabled = false;
     }
+  }
+
+  function descargarArchivo(bytes, filename) {
+    const blob = new Blob([bytes], { type: 'application/pdf' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   function montarHojaCombinada(nuevoDoc, paginasEmbebidas, pareja, sheetWidth, sheetHeight, halfWidth, libPDF) {
