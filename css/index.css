@@ -15,7 +15,7 @@ body {
   /* Fondo de 2 capas: 
      1. Textura granulada con opacidad sutil
      2. Gradiente radial oscuro original */
-  background:radial-gradient(circle at top center, #709e74 , #30633b, #13241d, #0e0211);
+  background:radial-gradient(circle at top center, #637a8d , #304463, #1c1e33, #0e0211);
 }
 
 body::before {
